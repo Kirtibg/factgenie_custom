@@ -24,7 +24,7 @@ The interface is a modified version of [factgenie](https://github.com/ufal/factg
 
 1. **Clone this repository**
    ```bash
-   git clone https://github.com/your-username/custom-factgenie.git
+   git clone [https://github.com/your-username/custom-factgenie.git](https://github.com/Kirtibg/factgenie_custom.git)
    cd custom-factgenie
    ```
 
@@ -43,7 +43,7 @@ The interface is a modified version of [factgenie](https://github.com/ufal/factg
    ```
 
 4. **Start the web interface**
-   ```bash
+   ```
    factgenie run --host=127.0.0.1 --port 8081
    ```
 5. **Access interface**
