@@ -74,7 +74,7 @@ Each line in the `.jsonl` file should be a JSON object with the following struct
 ```json
 {
   "participant": {
-    "id": <UserID>
+    "id": "123456"
   },
   "output": "<customized text>"
 }
