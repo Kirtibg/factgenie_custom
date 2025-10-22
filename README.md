@@ -24,7 +24,7 @@ The interface is a modified version of [factgenie](https://github.com/ufal/factg
 
 1. **Clone this repository**
    ```bash
-   git clone [https://github.com/your-username/custom-factgenie.git](https://github.com/Kirtibg/factgenie_custom.git)
+   git clone https://github.com/Kirtibg/factgenie_custom.git
    cd custom-factgenie
    ```
 
