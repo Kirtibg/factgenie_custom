@@ -1,0 +1,37 @@
+__pycache__/
+*.py[cod]
+*.egg-info
+export/datasets
+tmp
+.python-version
+.idea
+.DS_Store
+env/
+*.log
+.venv
+.vscode
+build
+dist
+venv/
+wiki
+factgenie/campaigns
+factgenie/templates/campaigns/*
+factgenie/data/datasets.yml
+factgenie/data/inputs
+factgenie/data/outputs
+factgenie/config/config.yml
+factgenie/config/llm-eval
+factgenie/config/llm-gen
+factgenie/config/crowdsourcing
+
+# ignore changes in the notebook by default (to avoid adding the notebook after each run)
+factgenie/notebooks/inter_annotator_agreement.ipynb
+
+# custom-factgenie START
+logs/
+upload.py
+gemini.py
+12a345b6cc789d10_generation_0.jsonl
+factgenie/data/datasets.yml
+factgenie/static/user_data
+# custom-factgenie END

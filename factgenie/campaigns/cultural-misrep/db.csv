@@ -1,0 +1,6 @@
+dataset,split,example_idx,setup_id,batch_idx,annotator_group,annotator_id,status,start,end
+dummy-input,split1,0,dummy-output,0,0,,free,,
+dummy-input,split1,1,dummy-output,0,0,,free,,
+dummy-input,split1,2,dummy-output,0,0,,free,,
+dummy-input,split1,3,dummy-output,0,0,,free,,
+dummy-input,split1,4,dummy-output,0,0,,free,,

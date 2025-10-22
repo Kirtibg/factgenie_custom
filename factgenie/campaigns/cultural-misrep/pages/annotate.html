@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Annotations</title>
+  <link rel="stylesheet" media="screen" href="{{ host_prefix }}/static/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="{{ host_prefix }}/static/css/custom.css">
+  <link rel="shortcut icon" href="{{ host_prefix }}/static/img/favicon.ico">
+  <link rel="stylesheet" href="{{ host_prefix }}/static/css/font-awesome.css">
+  <meta name="viewport" content="width=1024">
+  <script src="{{ host_prefix }}/static/js/lib/jquery.min.js"></script>
+  <script src="{{ host_prefix }}/static/js/lib/popper.min.js"></script>
+  <script src="{{ host_prefix }}/static/js/lib/bootstrap.min.js"></script>
+  <script src="{{ host_prefix }}/static/js/lib/jsonview.js"></script>
+  <script src="{{ host_prefix }}/static/js/lib/split.min.js"></script>
+  <script src="{{ host_prefix }}/static/js/lib/underscore-min.js"></script>
+  <script src="{{ host_prefix }}/static/js/lib/backbone-min.js"></script>
+  <script src="{{ host_prefix }}/static/js/lib/backbone-relational.js"></script>
+  <script src="{{ host_prefix }}/static/js/lib/backbone.marionette.min.js"></script>
+  <script src="{{ host_prefix }}/static/js/lib/underscore.string.min.js"></script>
+
+
+  {% include 'crowdsourcing/custom.html' %}
+</head><body class="body">
+  <nav class="navbar navbar-light bg-annotate">
+    <div class="container navbar-left">
+      <a class="navbar-brand" href="#">
+      </a>
+
+      <div class="navblock" id="actions-area">
+        <ul class="pagination" id="nav-example-cnt">
+        </ul>
+      </div>
+      <div class="navblock">
+        <ul class="pagination" style="margin-left: 10px;">
+          <li class="page-item">
+            <!-- <button type="button" class="btn btn-sm btn-success" id="submit-annotations-btn"
+              onclick="submitAnnotations();" style="display: none;">👉️ Submit annotations</button> -->
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+  <div class="large-container container">
+    <div class="row">
+      <div class="split col-12">
+        <div id="centerpanel" class="collapse hide">
+          <div class="tab-content">
+            <div id='tabulararea' class="tab-pane sidepanel-panel active" role="tabpanel">
+              <div class="d-flex align-items-center justify-content-center">
+                <div id="dataset-spinner" class="spinner-border" role="status" style="display: none">
+                  <span class="sr-only"></span>
+                </div>
+              </div>
+              <div id='examplearea'> </div>
+              <div id='rawarea' style="display: none"> </div>
+            </div>
+          </div>
+        </div>
+        <div id="rightpanel" class="collapse show">
+          <div id='sidepanel-content' class="tab-content">
+
+            <div class="accordion instructions-accordion">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button instructions-accordion-button btn-dark" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#instructions-acc-body">
+                    <b>Instructions</b>
+                  </button>
+                </h2>
+                <div id="instructions-acc-body" class="accordion-collapse collapse">
+                  <div class="accordion-body instructions-accordion-body">
+                    <h1>Categorization:</h1>
+                    
+
+                    <!-- Flashcards Container -->
+                    <div class="flashcards-container">
+                        <!-- Main Cards -->
+                        <div class="main-cards">
+                            <!-- Factual Errors Main Card -->
+                            <div class="main-card" data-category="factual">
+                                <div class="main-card-content">
+                                    <h3>Factual Errors</h3>
+                                    <p>These are errors related to objective and verifiable facts. If an information can be fact-checked and proven wrong from external sources (for example, wikipedia, news articles, etc.) it falls under this category.</p>
+                                    <div class="sub-cards">
+                                        <div class="sub-card" onclick="flipCard(this)">
+                                            <div class="sub-card-inner">
+                                                <div class="sub-card-front">
+                                                    <h4>Example 1</h4>
+                                                </div>
+                                                <div class="sub-card-back">
+                                                    <p> <em>"Mumbai is the capital of India - check"</em></p>
+                                                    <p>Reason: Delhi is the capital of India</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="sub-card" onclick="flipCard(this)">
+                                            <div class="sub-card-inner">
+                                                <div class="sub-card-front">
+                                                    <h4>Example 2</h4>
+                                                </div>
+                                                <div class="sub-card-back">
+                                                    <p><em>"Located on the banks of the Ganga River, Ahmedabad is a major commercial hub in western India."</em></p>
+                                                    <p>Reason: Ahmedabad is located on the bank of Sabarmati river, and not Ganga river.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p>Note, in this category, you should focus on only factual and verifiable errors. Errors related to incorrect cultural practices or beliefs will be categorised separately.</p>
+                                </div>
+                            </div>
+            
+                           
+            
+                            <div class="main-card" data-category="logical">
+                                <div class="main-card-content">
+                                    <h3>Logical Errors</h3>
+                                    <p>These are errors related to the plot of the story that may not make sense logically. These could be issues around inconsistency in the behaviour of the character, logistics, later part of the story not making sense with earlier parts of the story, and so on. </p>
+                                   
+                                    <div class="sub-cards">
+                                        <div class="sub-card" onclick="flipCard(this)">
+                                            <div class="sub-card-inner">
+                                                <div class="sub-card-front">
+                                                    <h4>Example 1</h4>
+                                                </div>
+                                                <div class="sub-card-back">
+                                                    <p><em>"He called a cab to take him to the airport for his flight. …. When he reached the railway station"</em></p>
+                                                    <p>Reason: The story earlier mentions that the character is supposed to go to the airport, but later says that the character reached the railway station.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="sub-card" onclick="flipCard(this)">
+                                            <div class="sub-card-inner">
+                                                <div class="sub-card-front">
+                                                    <h4>Example 2</h4>
+                                                </div>
+                                                <div class="sub-card-back">
+                                                    <p><em>"Harry set his alarm for 7 a.m., but was shocked when he woke up at 6:30 and realized he had overslept."</em></p>
+                                                    <p>Reason: If he woke up earlier than the alarm, he couldn't have overslept.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+            
+                           
+                            <div class="main-card" data-category="cultural">
+                                <div class="main-card-content">
+                                    <h3>Cultural Inaccuracies</h3>
+                                    <p>These are inaccuracies, errors, or misrepresentations related to cultural practices, objects, attire, traditions, rituals, etc. If the description or usage of any of the cultural elements in the story is either wrong or just in the wrong place, you should use this category. Note that these are different from factual and logical errors because they require special local or cultural knowledge to identify.</p>
+            
+                                    <div class="sub-cards">
+                                        <div class="sub-card" onclick="flipCard(this)">
+                                            <div class="sub-card-inner">
+                                                <div class="sub-card-front">
+                                                    <h4>Example 1</h4>
+                                                </div>
+                                                <div class="sub-card-back">
+                                                    <p> <em>"A group of women, dressed in colorful nauvari sarees, were performing the traditional 'Lavani' dance in the wedding ceremony."</em></p>
+                                                    <p>Reason: 'Lavani', a traditional Marathi dance, is not a wedding dance. Its inclusion in a wedding setting is culturally inaccurate.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    
+                                        <div class="sub-card" onclick="flipCard(this)">
+                                            <div class="sub-card-inner">
+                                                <div class="sub-card-front">
+                                                    <h4>Example 2</h4>
+                                                </div>
+                                                <div class="sub-card-back">
+                                                    <p><em>At the Chinese New Year gathering, guests arrived in all-black outfits to bring good luck for the year ahead.</em></p>
+                                                    <p>Reason: Black is typically avoided in Chinese New Year celebrations, as it's associated with bad luck or mourning. Red and gold are considered auspicious.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+            
+                          
+            
+                            <div class="main-card" data-category="improbabilities">
+                                <div class="main-card-content">
+                                    <h3> Cliche elements</h3>
+                                    <p>These are not necessarily errors, in fact they might be correct. However, these are elements that are considered cliche or stereotypical for the culture.</p>
+                                    <div class="sub-cards">
+                                        <div class="sub-card" onclick="flipCard(this)">
+                                            <div class="sub-card-inner">
+                                                <div class="sub-card-front">
+                                                    <h4>Example 1</h4>
+                                                </div>
+                                                <div class="sub-card-back">
+                                                    <p> <em>"The aroma of her freshly made filter coffee, a staple in every South Indian household, filled the air."</em></p>
+                                                    <p>Reason: Filter coffee is a cliche often associated with South India.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="sub-card" onclick="flipCard(this)">
+                                            <div class="sub-card-inner">
+                                                <div class="sub-card-front">
+                                                    <h4>Example 2</h4>
+                                                </div>
+                                                <div class="sub-card-back">
+                                                    <p>Example: <em>"The city was abuzz with excitement, and the streets of Pune were adorned with colorful decorations. The grandeur of the wedding was palpable in every nook and corner of the city."</em></p>
+                                                    <p>Reason: A wedding (even a big one) won't affect the entire city.</p>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+            
+                           
+                             <!-- Oversimplification Main Card -->
+                             <div class="main-card" data-category="cultural">
+                                <div class="main-card-content">
+                                    <h3>Oversimplification or Vague Descriptions</h3>
+                                    <p>These are not necessarily errors, instead they are vague descriptions of elements in a way that provides no real information about their uniqueness. This makes culturally unique elements seem similar across regions.</p>
+                                   
+            
+                                    <div class="sub-cards">
+                                        <div class="sub-card" onclick="flipCard(this)">
+                                            <div class="sub-card-inner">
+                                                <div class="sub-card-front">
+                                                    <h4>Example 1</h4>
+                                                </div>
+                                                <div class="sub-card-back">
+                                                    <p><em>"The Bengali delicacies included steamed rice, lentil soup, fried brinjal, and the famous Kolkata fish curry."</em></p>
+                                                    <p>Reason: Calling it "the famous Kolkata fish curry" oversimplifies reality as Kolkata has many distinct fish recipes, each with its own identity.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                   
+                                        <!-- <div class="sub-card" onclick="flipCard(this)">
+                                            <div class="sub-card-inner">
+                                                <div class="sub-card-front">
+                                                    <h4>Example 2</h4>
+                                                </div>
+                                                <div class="sub-card-back">
+                                                    <p>Example: <em>"To celebrate the festival, they all danced to the drums and tribal beats of African music."</em></p>
+                                                    <p>Issue: "African music" is not a single genre. It includes various genres, diverse instruments, languages, and urban as well as rural influences.</p>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+            
+                          
+                            <!-- Unrelatable Scenarios Main Card -->
+                            <div class="main-card" data-category="improbabilities">
+                                <div class="main-card-content">
+                                    <h3>Unlikely or Improbable scenarios</h3>
+                                    <p>These are not necessarily errors, however they are scenarios in the story that are very unlikely in real life. This includes exaggerated portrayal of cultural elements in a way that is unlikely in real life. It may also include descriptions of cultural practices that are very unlikely.</p>
+                                   
+                                    <div class="sub-cards">
+                                        <div class="sub-card" onclick="flipCard(this)">
+                                            <div class="sub-card-inner">
+                                                <div class="sub-card-front">
+                                                    <h4>Example 1</h4>
+                                                </div>
+                                                <div class="sub-card-back">
+                                                    <p><em>"Every student at school was served a hot, personalized lunch tray with their preferred dish"</em></p>
+                                                    <p>Reason: Usually schools follow a fixed menu for all students, personalized lunch tray for every student is very unlikely.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="sub-card" onclick="flipCard(this)">
+                                            <div class="sub-card-inner">
+                                                <div class="sub-card-front">
+                                                    <h4>Example 2</h4>
+                                                </div>
+                                                <div class="sub-card-back">
+                                                    <p> <em>"The guest arrived at his traditional Scottish wedding in cargo shorts and flip-flops."</em></p>
+                                                    <p>Reason: It is unlikely that a groom gets married in cargo shorts and flip-flops instead of more formal or traditional attire. </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+            
+                          
+                        
+            
+            
+                            <div class="main-card" data-category="linguistic">
+                                <div class="main-card-content">
+                                    <h3>Language error</h3>
+                                    <p>These are errors related to incorrect use of language. This may be using incorrect words in the wrong place, wrong mixing of multiple languages, or completely wrong language given the context.</p>
+                                    <div class="sub-cards">
+                                        <!-- <div class="sub-card" onclick="flipCard(this)">
+                                            <div class="sub-card-inner">
+                                                <div class="sub-card-front">
+                                                    <h4>Example 1</h4>
+                                                </div>
+                                                <div class="sub-card-back">
+                                                    <p>Example: <em>"On his tour, he wanted to visit the renowned Ferguson College, a colonial ..."</em></p>
+                                                    <p>Issue: The correct spelling is Furgguson College.</p>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                        <div class="sub-card" onclick="flipCard(this)">
+                                            <div class="sub-card-inner">
+                                                <div class="sub-card-front">
+                                                    <h4>Example 1</h4>
+                                                </div>
+                                                <div class="sub-card-back">
+                                                    <p>Example: <em>"Rohan barely had time to step out before his mother enveloped him in a crushing hug. "Beta, hum to mota thai gaya!"</em></p>
+                                                    <p>Reason: the mother's dialog is a very incorrect mix of Hindi and Gujarati.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+            
+                         
+            
+                            <!-- Comments Main Card -->
+                            <div class="main-card" data-category="comments">
+                                <div class="main-card-content">
+                                    <h3>Others</h3>
+                                    <p>Observations that may not fit neatly into the above categories but are worth noting.</p>
+                                </div>
+                            </div>
+            
+            
+                            <!-- Remove all other instances of MCQ sections from the file -->
+                            <!-- Keep the JavaScript for MCQ validation at the end of the file -->
+                            <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                // Correct answers
+                                const correctAnswers = {
+                                    'factualMCQ': 'factual1',  
+                                    'logicalMCQ': 'logical2',  
+                                    'culturalMCQ': 'cultural1', 
+                                    'caricatureMCQ': 'caricature3',
+                                    'oversimplificationMCQ':'oversimplification3',
+                                    'unrelatableMCQ':'unrelatable2',
+                                    'linguisticMCQ': 'linguistic1'  
+                                };
+            
+                                // Add change event listeners to all radio buttons
+                                document.querySelectorAll('.form-check-input').forEach(radio => {
+                                    radio.addEventListener('change', function() {
+                                        const questionName = this.name;
+                                        const selectedId = this.id;
+                                        const isCorrect = correctAnswers[questionName] === selectedId;
+                                        
+                                        // Find the parent form-check div
+                                        const formCheck = this.closest('.form-check');
+                                        
+                                        // Remove any existing feedback
+                                        formCheck.classList.remove('correct-answer', 'incorrect-answer');
+                                        
+                                        // Add appropriate feedback class
+                                        formCheck.classList.add(isCorrect ? 'correct-answer' : 'incorrect-answer');
+                                    });
+                                });
+                            });
+                            </script>
+                        </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id='output-content'>
+              <div>
+                <div class="mt-3 mb-4 d-flex flex-wrap gap-1 align-items-center" role="group"
+                  aria-label="Basic radio toggle button group">
+                  
+                  <input type="checkbox" class="btn-check btn-outline-secondary btn-err-cat" name="btnradio"
+                    id="btnradio1" autocomplete="off" checked
+                    data-cat-idx="0">
+                  <label class="btn btn-err-cat-label"
+                    for="btnradio1" style="background-color: rgb(2, 73, 131);">
+                    Annotate
+                  </label>
+                  
+                  <!-- <input type="radio" class="btn-check btn-outline-secondary btn-err-cat" name="btnradio"
+                    id="btnradio2" autocomplete="off" 
+                    data-cat-idx="1">
+                  <label class="btn btn-err-cat-label "
+                    for="btnradio2" style="background-color: rgb(214, 39, 40);">
+                    Cultural Inaccuracies
+                  </label> -->
+                  
+                  <!-- <input type="radio" class="btn-check btn-outline-secondary btn-err-cat" name="btnradio"
+                    id="btnradio3" autocomplete="off" 
+                    data-cat-idx="2">
+                  <label class="btn btn-err-cat-label "
+                    for="btnradio3" style="background-color: rgb(148, 103, 189);">
+                    Improbabilities/Unrelatable Scenarios
+                  </label> -->
+                  
+                  <!-- <input type="radio" class="btn-check btn-outline-secondary btn-err-cat" name="btnradio"
+                    id="btnradio4" autocomplete="off" 
+                    data-cat-idx="3">
+                  <label class="btn btn-err-cat-label "
+                    for="btnradio4" style="background-color: rgb(27, 158, 119);">
+                    Linguistic Inaccuracies
+                  </label> -->
+                  
+                  <!-- <input type="radio" class="btn-check btn-outline-secondary btn-err-cat" name="btnradio"
+                    id="btnradio5" autocomplete="off" 
+                    data-cat-idx="4">
+                  <label class="btn btn-err-cat-label "
+                    for="btnradio5" style="background-color: rgb(166, 118, 29);">
+                    Logical Errors
+                  </label> -->
+                  
+                  <!-- <input type="radio" class="btn-check btn-outline-secondary btn-err-cat" name="btnradio"
+                    id="btnradio6" autocomplete="off" 
+                    data-cat-idx="5">
+                  <label class="btn btn-err-cat-label "
+                    for="btnradio6" style="background-color: rgb(127, 127, 127);">
+                    Comment
+                  </label> -->
+                  
+                  <div class="ms-auto d-flex align-items-center">
+                    <!-- <input type="radio" class="btn-check btn-outline-secondary btn-select" name="btnradio"
+                        id="btnradioselect" autocomplete="off" data-cat-idx="-2">
+                    <label class="btn btn-err-cat-label" for="btnradioselect"
+                        style="background-color: #FFF; color: #000 !important;">
+                        <i class="fa fa-mouse-pointer" aria-hidden="true"></i>
+                        test
+                    </label> -->
+                    <!-- <input type="radio" class="btn-check btn-outline-secondary btn-eraser" name="btnradio"
+                        id="btnradioeraser" autocomplete="off" data-cat-idx="-1"> -->
+                    <!-- <label class="btn btn-err-cat-label" for="btnradioeraser"
+                        style="background-color: #FFF; color: #000 !important;">
+                        <i class="fa fa-eraser" aria-hidden="true"></i>
+                    </label> -->
+                    
+                  </div>
+                   <div class="col-6 d-grid">
+                          <button id="save-progress-logout-btn" class="btn btn-primary">Save Progress and Logout</button>
+                      </div>
+                </div>
+              </div>
+              <div id='text-type-info' class='mt-3'>Drag your mouse over the text to highlight the span:
+              </div>
+              <div id='outputarea'>
+              </div>
+            </div>
+            <div class="" id="checkbox-annotation-box">
+              
+
+              <!-- <div class='mt-2 mb-3'>
+            <div class="form-group crowdsourcing-option option-select mb-4">
+                <div><label for="select-0"><b>Would you like to read similar stories in the future? (Yes / No)</b></label></div>
+                <select class="form-select select-crowdsourcing mb-1" id="select-crowdsourcing-0">
+                    <option value="" selected disabled>Select an option...</option>
+        <option class="select-crowdsourcing-0-value" value="0">Yes</option>
+            <option class="select-crowdsourcing-0-value" value="1">No</option>
+            
+                </select>
+            </div> -->
+        
+            <!-- <div class="form-group crowdsourcing-option option-select mb-4">
+                <div><label for="select-1"><b>Did you find the story emotionally engaging or fulfilling? (Yes / No)</b></label></div>
+                <select class="form-select select-crowdsourcing mb-1" id="select-crowdsourcing-1">
+                    <option value="" selected disabled>Select an option...</option>
+        <option class="select-crowdsourcing-1-value" value="0">Yes</option>
+            <option class="select-crowdsourcing-1-value" value="1">No</option>
+            
+                </select>
+            </div> -->
+        
+
+            <div class='mt-2 mb-3'>
+            <div class="form-group crowdsourcing-slider mb-4">
+                <label for="slider-0"><b>On a scale of 1 to 5 (1 being the least, 5 being the highest) how closely were you able to relate to the story?</b></label>
+                <input type="range" class="form-range slider-crowdsourcing" id="slider-crowdsourcing-0" min="1" max="5" step="1">
+                <div class="d-flex justify-content-between">
+                    <div class="text-muted small"><span>1</span></div>
+                    <div class="text-muted small"><span>2</span></div>
+                    <div class="text-muted small"><span>3</span></div>
+                    <div class="text-muted small"><span>4</span></div>
+                    <!-- <div><span id="slider-crowdsourcing-0-value" class="slider-crowdsourcing-value" data-default-value=""></span></div> -->
+                    <div class="text-muted small"><span>5</span></div>
+                </div>
+            </div>
+        </div><script src="{{ host_prefix }}/static/js/render-sliders.js"></script>
+
+              <div class='mt-2 mb-3'>
+            <div class="form-group crowdsourcing-text mb-4">
+                <label for="textbox-0"><b>Any general comment for the story?</b></label>
+                <input type="text" class="form-control textbox-crowdsourcing" id="textbox-crowdsourcing-0">
+            </div>
+        </div>
+              <div id="submit-annotation-box" class="mt-3 mb-4">
+                  <div class="row justify-content-center g-2">
+                      <div class="col-6 d-grid">
+                          <button id="mark-complete-btn" class="btn btn-primary" onclick="markAnnotationAsComplete()">Mark example as Complete</button>
+                      </div>
+                      <!-- <div class="col-6 d-grid">
+                          <button id="save-progress-logout-btn" class="btn btn-primary">Save Progress and Logout</button>
+                      </div> -->
+                      <div class="col-12 d-grid">
+                          <button id="submit-annotations-btn" class="btn btn-success" onclick="submitAnnotations()" style="display: none;">Submit Annotations</button>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+ 
+
+  <div id="overlay-end" class="overlay" style="display: none">
+    <div id="overlay-end-content" class="overlay-content blue-link">
+      <h1></h1>
+
+      <div id="final-message">
+      </div>
+    </div>
+  </div>
+
+  <!-- Keep only this one overlay for instructions -->
+  <div id="overlay-instructions" class="overlay">
+    <div class="overlay-content">
+        <h1>Instructions</h1>
+        
+        <p>The goal of this annotation is to understand the characteristics of stories generated by AI systems. You will be presented with some stories based on a variety of topics ranging from daily life to moral values. </p>
+        <p>These stories are created based on your personal details and are expected to incorporate cultural elements from your region and/or other aspects of your identity that you shared with us.</p>
+        <p>Your goal is to carefully read through every story, with special attention to the cultural elements that the story incorporates.</p>
+        <p>Based on your reading, you will mark the phrases that may be either wrong, or those that feel awkward, out of place, or cliche to you. For every annotation, you will also have to write a short description of why you marked this phrase.</p>
+        <p>You will be using the following categories to annotate the phrases. Please read through their definitions and examples carefully before starting the annotation. You can reference these definitions or examples anytime during the annotation process.</p>
+        <p>Note that some of these categories are explicit errors or mistakes. But not all of them are errors or mistakes. We are looking for any and all comments about things in the story that stand out to you because it is either weird or out-of-place in the story. If your marking or comment does not fit into any of these categories, you can use the `other' category.</p>
+        <p>Now please go through the categories and examples in each category before starting the annotation process. Click on the "Example" cards to see examples.</p>
+
+        <!-- Flashcards Container -->
+        <div class="flashcards-container">
+            <!-- Main Cards -->
+            <div class="main-cards">
+                <!-- Factual Errors Main Card -->
+                <div class="main-card" data-category="factual">
+                    <div class="main-card-content">
+                        <h3>Factual Errors</h3>
+                        <p>These are errors related to objective and verifiable facts. If an information can be fact-checked and proven wrong from external sources (for example, wikipedia, news articles, etc.) it falls under this category.</p>
+                        <div class="sub-cards">
+                            <div class="sub-card" onclick="flipCard(this)">
+                                <div class="sub-card-inner">
+                                    <div class="sub-card-front">
+                                        <h4>Example 1</h4>
+                                    </div>
+                                    <div class="sub-card-back">
+                                        <p> <em>"Mumbai is the capital of India"</em></p>
+                                        <p>Reason: Delhi is the capital of India</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="sub-card" onclick="flipCard(this)">
+                                <div class="sub-card-inner">
+                                    <div class="sub-card-front">
+                                        <h4>Example 2</h4>
+                                    </div>
+                                    <div class="sub-card-back">
+                                        <p><em>"Located on the banks of the Ganga River, Ahmedabad is a major commercial hub in western India."</em></p>
+                                        <p>Reason: Ahmedabad is located on the bank of Sabarmati river, and not Ganga river.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p>Note, in this category, you should focus on only factual and verifiable errors. Errors related to incorrect cultural practices or beliefs will be categorised separately.</p>
+                    </div>
+                </div>
+
+                <!-- Add MCQ right after Factual Errors card -->
+                <div class="mcq-section">
+                    <h4>Quick Check:</h4>
+                    <p>Which of the following best qualifies as a factual error?</p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="factualMCQ" id="factual1">
+                        <label class="form-check-label" for="factual1">
+                            A description of snow in Chennai during December
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="factualMCQ" id="factual2">
+                        <label class="form-check-label" for="factual2">
+                            A bride not looking excited at her wedding
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="factualMCQ" id="factual3">
+                        <label class="form-check-label" for="factual3">
+                            A family eating with their hands during a festival
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="factualMCQ" id="factual4">
+                        <label class="form-check-label" for="factual4">
+                            A character wearing casual clothes to a traditional ceremony
+                        </label>
+                    </div>
+                </div>
+
+                <div class="main-card" data-category="logical">
+                    <div class="main-card-content">
+                        <h3>Logical Errors</h3>
+                        <p>These are errors related to the plot of the story that may not make sense logically. These could be issues around inconsistency in the behaviour of the character, logistics, later part of the story not making sense with earlier parts of the story, and so on. </p>
+                       
+                        <div class="sub-cards">
+                            <div class="sub-card" onclick="flipCard(this)">
+                                <div class="sub-card-inner">
+                                    <div class="sub-card-front">
+                                        <h4>Example 1</h4>
+                                    </div>
+                                    <div class="sub-card-back">
+                                        <p><em>"He called a cab to take him to the airport for his flight. …. When he reached the railway station"</em></p>
+                                        <p>Reason: The story earlier mentions that the character is supposed to go to the airport, but later says that the character reached the railway station.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="sub-card" onclick="flipCard(this)">
+                                <div class="sub-card-inner">
+                                    <div class="sub-card-front">
+                                        <h4>Example 2</h4>
+                                    </div>
+                                    <div class="sub-card-back">
+                                        <p><em>"Harry set his alarm for 7 a.m., but was shocked when he woke up at 6:30 and realized he had overslept."</em></p>
+                                        <p>Reason: If he woke up earlier than the alarm, he couldn't have overslept.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add MCQ right after Logical Errors card -->
+                <div class="mcq-section">
+                    <h4>Quick Check:</h4>
+                    <p>Which scenario contains a logical error?</p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="logicalMCQ" id="logical1">
+                        <label class="form-check-label" for="logical1">
+                            She put on her warmest coat before stepping out into the snow
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="logicalMCQ" id="logical2">
+                        <label class="form-check-label" for="logical2">
+                            He was exhausted after running the marathon, so he immediately ran another one
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="logicalMCQ" id="logical3">
+                        <label class="form-check-label" for="logical3">
+                            The students studied hard for their exams
+                        </label>
+                    </div>
+                </div>
+
+                <div class="main-card" data-category="cultural">
+                    <div class="main-card-content">
+                        <h3>Cultural Inaccuracies</h3>
+                        <p>These are inaccuracies, errors, or misrepresentations related to cultural practices, objects, attire, traditions, rituals, etc. If the description or usage of any of the cultural elements in the story is either wrong or just in the wrong place, you should use this category. Note that these are different from factual and logical errors because they require special local or cultural knowledge to identify.</p>
+
+                        <div class="sub-cards">
+                            <div class="sub-card" onclick="flipCard(this)">
+                                <div class="sub-card-inner">
+                                    <div class="sub-card-front">
+                                        <h4>Example 1</h4>
+                                    </div>
+                                    <div class="sub-card-back">
+                                        <p> <em>"A group of women, dressed in colorful nauvari sarees, were performing the traditional 'Lavani' dance in the wedding ceremony."</em></p>
+                                        <p>Reason: 'Lavani', a traditional Marathi dance, is not a wedding dance. Its inclusion in a wedding setting is culturally inaccurate.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="sub-card" onclick="flipCard(this)">
+                                <div class="sub-card-inner">
+                                    <div class="sub-card-front">
+                                        <h4>Example 2</h4>
+                                    </div>
+                                    <div class="sub-card-back">
+                                        <p><em>At the Chinese New Year gathering, guests arrived in all-black outfits to bring good luck for the year ahead.</em></p>
+                                        <p>Reason: Black is typically avoided in Chinese New Year celebrations, as it's associated with bad luck or mourning. Red and gold are considered auspicious.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add MCQ right after Cultural Inaccuracies card -->
+                <div class="mcq-section">
+                    <h4>Quick Check:</h4>
+                    <p>Which is an example of a cultural inaccuracy?</p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="culturalMCQ" id="cultural1">
+                        <label class="form-check-label" for="cultural1">
+                            An Indian bride wearing jeans and shirt for her traditional wedding.
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="culturalMCQ" id="cultural2">
+                        <label class="form-check-label" for="cultural2">
+                            People eating with chopsticks at a Chinese restaurant.
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="culturalMCQ" id="cultural3">
+                        <label class="form-check-label" for="cultural3">
+                            Children arriving at school in a school bus.
+                        </label>
+                    </div>
+                </div>
+
+                <div class="main-card" data-category="improbabilities">
+                    <div class="main-card-content">
+                        <h3> Cliche elements</h3>
+                        <p>These are not necessarily errors, in fact they might be correct. However, these are elements that are considered cliche or stereotypical for the culture.</p>
+                        <div class="sub-cards">
+                            <div class="sub-card" onclick="flipCard(this)">
+                                <div class="sub-card-inner">
+                                    <div class="sub-card-front">
+                                        <h4>Example 1</h4>
+                                    </div>
+                                    <div class="sub-card-back">
+                                        <p> <em>"The aroma of her freshly made filter coffee, a staple in every South Indian household, filled the air."</em></p>
+                                        <p>Reason: Filter coffee is a cliche often associated with South India.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="sub-card" onclick="flipCard(this)">
+                                <div class="sub-card-inner">
+                                    <div class="sub-card-front">
+                                        <h4>Example 2</h4>
+                                    </div>
+                                    <div class="sub-card-back">
+                                        <p>Example: <em>"The city was abuzz with excitement, and the streets of Pune were adorned with colorful decorations. The grandeur of the wedding was palpable in every nook and corner of the city."</em></p>
+                                        <p>Reason: A wedding (even a big one) won't affect the entire city.</p>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add MCQ right after Caricature/Cliché card -->
+                <div class="mcq-section">
+                    <h4>Quick Check:</h4>
+                    <p>What type of error is shown in this sentence? 
+                    "Every Punjabi wedding is a loud, colorful affair filled with nonstop dancing and endless food."</p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="caricatureMCQ" id="caricature1">
+                        <label class="form-check-label" for="caricature1">
+                            Factual Error
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="caricatureMCQ" id="caricature2">
+                        <label class="form-check-label" for="caricature2">
+                            Cultural Inaccuracy
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="caricatureMCQ" id="caricature3">
+                        <label class="form-check-label" for="caricature3">
+                            Cliche elements
+                        </label>
+                    </div>
+                </div>
+
+                 <!-- Oversimplification Main Card -->
+                 <div class="main-card" data-category="cultural">
+                    <div class="main-card-content">
+                        <h3>Oversimplification or Vague Descriptions</h3>
+                        <p>These are not necessarily errors, instead they are vague descriptions of elements in a way that provides no real information about their uniqueness. This makes culturally unique elements seem similar across regions.</p>
+                       
+
+                        <div class="sub-cards">
+                            <div class="sub-card" onclick="flipCard(this)">
+                                <div class="sub-card-inner">
+                                    <div class="sub-card-front">
+                                        <h4>Example 1</h4>
+                                    </div>
+                                    <div class="sub-card-back">
+                                        <p><em>"The Bengali delicacies included steamed rice, lentil soup, fried brinjal, and the famous Kolkata fish curry."</em></p>
+                                        <p>Reason: Calling it "the famous Kolkata fish curry" oversimplifies reality as Kolkata has many distinct fish recipes, each with its own identity.</p>
+                                    </div>
+                                </div>
+                            </div>
+                       
+                            <!-- <div class="sub-card" onclick="flipCard(this)">
+                                <div class="sub-card-inner">
+                                    <div class="sub-card-front">
+                                        <h4>Example 2</h4>
+                                    </div>
+                                    <div class="sub-card-back">
+                                        <p>Example: <em>"To celebrate the festival, they all danced to the drums and tribal beats of African music."</em></p>
+                                        <p>Issue: "African music" is not a single genre. It includes various genres, diverse instruments, languages, and urban as well as rural influences.</p>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mcq-section">
+                    <h4>Quick Check:</h4>
+                    <p>In the line "Every morning the temple in the town played Indian music", which type of misrepresentation is depicted by "Indian music"?</p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="oversimplificationMCQ" id="oversimplification1">
+                        <label class="form-check-label" for="oversimplification1">
+                            Factual Error
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="oversimplificationMCQ" id="oversimplification2">
+                        <label class="form-check-label" for="oversimplification2">
+                            Cultural Inaccuracy
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="oversimplificationMCQ" id="oversimplification3">
+                        <label class="form-check-label" for="oversimplification3">
+                            Oversimplification or Vague Descriptions
+                        </label>
+                    </div>
+                   
+                </div>
+
+
+                <!-- Unrelatable Scenarios Main Card -->
+                <div class="main-card" data-category="improbabilities">
+                    <div class="main-card-content">
+                        <h3>Unlikely or Improbable scenarios</h3>
+                        <p>These are not necessarily errors, however they are scenarios in the story that are very unlikely in real life. This includes exaggerated portrayal of cultural elements in a way that is unlikely in real life. It may also include descriptions of cultural practices that are very unlikely.</p>
+                       
+                        <div class="sub-cards">
+                            <div class="sub-card" onclick="flipCard(this)">
+                                <div class="sub-card-inner">
+                                    <div class="sub-card-front">
+                                        <h4>Example 1</h4>
+                                    </div>
+                                    <div class="sub-card-back">
+                                        <p><em>"Every student at school was served a hot, personalized lunch tray with their preferred dish"</em></p>
+                                        <p>Reason: Usually schools follow a fixed menu for all students, personalized lunch tray for every student is very unlikely.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="sub-card" onclick="flipCard(this)">
+                                <div class="sub-card-inner">
+                                    <div class="sub-card-front">
+                                        <h4>Example 2</h4>
+                                    </div>
+                                    <div class="sub-card-back">
+                                        <p> <em>"The guest arrived at his traditional Scottish wedding in cargo shorts and flip-flops."</em></p>
+                                        <p>Reason: It is unlikely that a groom gets married in cargo shorts and flip-flops instead of more formal or traditional attire. </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mcq-section">
+                    <h4>Quick Check:</h4>
+                    <p>If a story says "Mount Kilimanjaro, the highest peak in the world, is a popular destination for climbers.". This is:</p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="unrelatableMCQ" id="unrelatable1">
+                        <label class="form-check-label" for="unrelatable1">
+                            Unlikely or Improbable scenarios
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="unrelatableMCQ" id="unrelatable2">
+                        <label class="form-check-label" for="unrelatable2">
+                            Factual error
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="unrelatableMCq" id="unrelatable3">
+                        <label class="form-check-label" for="unrelatable3">
+                            Oversimplification
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="unrelatableMCQ" id="unrelatable4">
+                        <label class="form-check-label" for="unrelatable4">
+                            Cultural Inaccuracy
+                        </label>
+                    </div>
+                </div>
+
+            
+
+
+                <div class="main-card" data-category="linguistic">
+                    <div class="main-card-content">
+                        <h3>Language error</h3>
+                        <p>These are errors related to incorrect use of language. This may be using incorrect words in the wrong place, wrong mixing of multiple languages, or completely wrong language given the context.</p>
+                        <div class="sub-cards">
+                            <!-- <div class="sub-card" onclick="flipCard(this)">
+                                <div class="sub-card-inner">
+                                    <div class="sub-card-front">
+                                        <h4>Example 1</h4>
+                                    </div>
+                                    <div class="sub-card-back">
+                                        <p>Example: <em>"On his tour, he wanted to visit the renowned Ferguson College, a colonial ..."</em></p>
+                                        <p>Issue: The correct spelling is Furgguson College.</p>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <div class="sub-card" onclick="flipCard(this)">
+                                <div class="sub-card-inner">
+                                    <div class="sub-card-front">
+                                        <h4>Example 1</h4>
+                                    </div>
+                                    <div class="sub-card-back">
+                                        <p>Example: <em>"Rohan barely had time to step out before his mother enveloped him in a crushing hug. "Beta, hum to mota thai gaya!"</em></p>
+                                        <p>Reason: the mother's dialog is a very incorrect mix of Hindi and Gujarati.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add MCQ right after Linguistic Inaccuracies card -->
+                <div class="mcq-section">
+                    <h4>Quick Check:</h4>
+                    <p>A story spells "Kolkata" as "Kolkatta." This is a:</p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="linguisticMCQ" id="linguistic1">
+                        <label class="form-check-label" for="linguistic1">
+                            Language errors
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="linguisticMCQ" id="linguistic2">
+                        <label class="form-check-label" for="linguistic2">
+                            Oversimplification
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="linguisticMCQ" id="linguistic3">
+                        <label class="form-check-label" for="linguistic3">
+                            Cultural Inaccuracy
+                        </label>
+                    </div>
+                </div>
+
+
+                <!-- Comments Main Card -->
+                <div class="main-card" data-category="comments">
+                    <div class="main-card-content">
+                        <h3>Others</h3>
+                        <p>Observations that may not fit neatly into the above categories but are worth noting.</p>
+                    </div>
+                </div>
+
+
+                <!-- Remove all other instances of MCQ sections from the file -->
+                <!-- Keep the JavaScript for MCQ validation at the end of the file -->
+                <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Correct answers
+                    const correctAnswers = {
+                        'factualMCQ': 'factual1',  
+                        'logicalMCQ': 'logical2',  
+                        'culturalMCQ': 'cultural1', 
+                        'caricatureMCQ': 'caricature3',
+                        'oversimplificationMCQ':'oversimplification3',
+                        'unrelatableMCQ':'unrelatable2',
+                        'linguisticMCQ': 'linguistic1'  
+                    };
+
+                    // Add change event listeners to all radio buttons
+                    document.querySelectorAll('.form-check-input').forEach(radio => {
+                        radio.addEventListener('change', function() {
+                            const questionName = this.name;
+                            const selectedId = this.id;
+                            const isCorrect = correctAnswers[questionName] === selectedId;
+                            
+                            // Find the parent form-check div
+                            const formCheck = this.closest('.form-check');
+                            
+                            // Remove any existing feedback
+                            formCheck.classList.remove('correct-answer', 'incorrect-answer');
+                            
+                            // Add appropriate feedback class
+                            formCheck.classList.add(isCorrect ? 'correct-answer' : 'incorrect-answer');
+                        });
+                    });
+                });
+                </script>
+            </div>
+        </div>
+
+        
+        As you navigate to the next page, you will be shown a few stories. Carefully read through them.
+
+        When you find an issue, you should highlight it directly in the text. Use the comment box to briefly explain why it is incorrect and, if possible, suggest a correction. If you're unsure about any information, verify it online before marking it as incorrect.
+
+        Follow the steps as shown below to annotate any text:
+
+
+        <div class="instruction-media-container" style="width: 100%; margin: 20px 0;">
+            <img 
+                src="{{ host_prefix }}/static/videos/FLAIR_INSTRUCT.gif" 
+                alt="How to select text and annotate" 
+                style="width: 100%; max-width: 800px; height: auto; display: block; margin: 0 auto; border: 1px solid #ddd; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"
+            >
+        </div>
+       
+        After reading each story, you will be asked a set of questions. Please take your time and answer them thoughtfully.
+        <br>
+        <br>
+       
+
+        <button id="hideOverlayBtn" class="btn btn-primary" disabled>Please wait while we load the examples. This can take a few minutes.</button>
+    </div>
+  </div>
+
+  <div id="overlay-questions" class="overlay">
+    <div id="overlay-start-content" class="overlay-content">
+      <h1>Welcome!</h1>
+      <p>Thank You for Participating in Our User Study</p>
+      <p>
+          Please provide your Name and UserID: 
+      </p>
+      <div id="userFormError" style="color: red; display: none; margin-bottom: 10px;"></div>
+      <form id="userForm">
+          <div class="form-group">
+            <div id="questionnaire">
+                <label for="userName">Name:</label>
+                <input type="text" id="userName" class="form-control" required placeholder="example: John" />
+                <label for="userId">User ID:</label>
+                <input type="text" id="userId" class="form-control" required placeholder="example: user123" />
+            </div>
+          </div>
+          <button type="submit" id="saveBtn" style="margin: 10px;" class="btn btn-success">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="overlay-fail" class="overlay" style="display: none">
+    <div id="overlay-fail-content" class="overlay-content blue-link">
+      <h1>Error</h1>
+
+      <p>Sorry, your annotations could not be saved. Error: <span id="error-message" class="font-monospace"></span>.
+      </p>
+
+      <p>Possible reasons:
+      <ul>
+        <li>Your session has expired.</li>
+        <li>There was a problem on the server side.</li>
+      </ul>
+      </p>
+      <p>
+        For more information, please contact the administrators of this project.
+      </p>
+    </div>
+  </div>
+
+  <div id="overlay-progress-saved" class="overlay" style="display: none">
+    <div class="overlay-content blue-link" style="text-align: center; padding: 60px 30px;">
+      <h1>Progress Saved</h1>
+      <p>Your progress has been saved. You can safely log out and return later to continue your work.</p>
+      <button class="btn btn-primary" onclick="window.location.reload()">Return to Login</button>
+    </div>
+  </div>
+
+</body>
+
+<script>
+  window.url_prefix = "{{ host_prefix }}";
+  window.annotation_set = {{ annotation_set | tojson | safe }};
+  window.mode = "annotate";
+  window.annotator_id = "{{ annotator_id }}";
+  window.metadata = {{ metadata | tojson | safe }};
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="{{ host_prefix }}/static/js/utils.js"></script>
+<script src="{{ host_prefix }}/static/js/span-annotator.js"></script>
+<script src="{{ host_prefix }}/static/js/annotate.js"></script>
+
+<style>
+/* Main Cards Container */
+.flashcards-container {
+    max-width: 100%;
+    margin: 1.5rem auto;
+    padding: 15px;
+}
+
+.main-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+/* Main Card Styles */
+.main-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid transparent;
+}
+
+.main-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
+
+.main-card-content {
+    padding: 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-card h3 {
+    color: #1a202c;
+    margin-bottom: 0.75rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.main-card p {
+    color: #4a5568;
+    margin-bottom: 1.25rem;
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+/* Sub Cards Container */
+.sub-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Force 2 columns */
+    gap: 1rem;
+    margin-top: 1.25rem;
+    width: 100%;
+    max-width: 800px; /* Limit maximum width */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Sub Card Styles */
+.sub-card {
+    perspective: 1000px;
+    height: 120px; /* Further reduced height */
+    width: 100%;
+    max-width: 380px;
+    margin: 0 auto;
+    cursor: pointer; /* Add cursor pointer to indicate clickable */
+}
+
+.sub-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+/* Remove hover-based flipping */
+/* .sub-card:hover .sub-card-inner {
+    transform: rotateY(180deg);
+} */
+
+/* Add class for flipped state */
+.sub-card.flipped .sub-card-inner {
+    transform: rotateY(180deg);
+}
+
+.sub-card-front,
+.sub-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    padding: 0.75rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow-y: auto;
+}
+
+.sub-card-front {
+    background: #f8fafc;
+    padding-top: 0.75rem; /* Increased top padding */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Changed from flex-start to center */
+    align-items: center;
+    overflow-y: auto;
+}
+
+.sub-card-back {
+    background: white;
+    transform: rotateY(180deg);
+}
+
+.sub-card h4 {
+    color: #1a202c;
+    margin-bottom: 0.35rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-top: 0.25rem; /* Added top margin */
+}
+
+.sub-card-front p {
+    color: #4a5568;
+    font-size: 0.8rem;
+    line-height: 1.3;
+    margin: 0;
+    padding: 0 0.25rem;
+    margin-top: 0.15rem; /* Added small top margin */
+}
+
+.sub-card-back p {
+    color: #4a5568;
+    font-size: 0.75rem;
+    line-height: 1.3;
+    margin: 0;
+}
+
+/* Add custom scrollbar for sub-cards */
+.sub-card-front::-webkit-scrollbar,
+.sub-card-back::-webkit-scrollbar {
+    width: 4px; /* Thinner scrollbar */
+}
+
+.sub-card-front::-webkit-scrollbar-track,
+.sub-card-back::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 2px;
+}
+
+.sub-card-front::-webkit-scrollbar-thumb,
+.sub-card-back::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 2px;
+}
+
+.sub-card-front::-webkit-scrollbar-thumb:hover,
+.sub-card-back::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Ensure content is scrollable if it overflows */
+.sub-card-front,
+.sub-card-back {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: #888 #f1f1f1; /* Firefox */
+}
+
+/* Add padding to ensure text isn't cut off */
+.sub-card-front > *,
+.sub-card-back > * {
+    padding: 0.25rem 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .sub-cards {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+    }
+    
+    .sub-card {
+        height: 120px;
+        max-width: 100%;
+    }
+}
+
+/* Category-specific colors */
+.main-card[data-category="factual"] {
+    border-left: 4px solid #f59e0b;
+    background: linear-gradient(to right, rgba(245, 158, 11, 0.05), transparent);
+}
+
+.main-card[data-category="cultural"] {
+    border-left: 4px solid #ef4444;
+    background: linear-gradient(to right, rgba(239, 68, 68, 0.05), transparent);
+}
+
+.main-card[data-category="improbabilities"] {
+    border-left: 4px solid #8b5cf6;
+    background: linear-gradient(to right, rgba(139, 92, 246, 0.05), transparent);
+}
+
+.main-card[data-category="linguistic"] {
+    border-left: 4px solid #10b981;
+    background: linear-gradient(to right, rgba(16, 185, 129, 0.05), transparent);
+}
+
+.main-card[data-category="logical"] {
+    border-left: 4px solid #3b82f6;
+    background: linear-gradient(to right, rgba(59, 130, 246, 0.05), transparent);
+}
+
+.main-card[data-category="comments"] {
+    border-left: 4px solid #6b7280;
+    background: linear-gradient(to right, rgba(107, 114, 128, 0.05), transparent);
+}
+
+/* Sub-card category colors */
+.sub-card-front {
+    border: 1px solid transparent;
+}
+
+.main-card[data-category="factual"] .sub-card-front {
+    background: #fef3c7;
+    border-color: #f59e0b;
+}
+
+.main-card[data-category="cultural"] .sub-card-front {
+    background: #fee2e2;
+    border-color: #ef4444;
+}
+
+.main-card[data-category="improbabilities"] .sub-card-front {
+    background: #ede9fe;
+    border-color: #8b5cf6;
+}
+
+.main-card[data-category="linguistic"] .sub-card-front {
+    background: #d1fae5;
+    border-color: #10b981;
+}
+
+.main-card[data-category="logical"] .sub-card-front {
+    background: #dbeafe;
+    border-color: #3b82f6;
+}
+
+.main-card[data-category="comments"] .sub-card-front {
+    background: #f3f4f6;
+    border-color: #6b7280;
+}
+
+/* Add smooth transitions */
+.main-card,
+.sub-card,
+.sub-card-inner,
+.sub-card-front,
+.sub-card-back {
+    transition: all 0.3s ease;
+}
+
+/* Improve hover states */
+.sub-card:hover .sub-card-front {
+    transform: scale(1.02);
+}
+
+/* Add subtle animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.main-card {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Improve accessibility */
+/* Remove this conflicting rule */
+/* .sub-card:focus-within .sub-card-inner {
+    transform: rotateY(180deg);
+} */
+
+/* Add focus styles */
+.main-card:focus-within {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+/* Ensure flipped state has higher specificity */
+.sub-card.flipped .sub-card-inner {
+    transform: rotateY(180deg) !important;
+}
+</style>
+
+<script>
+let currentCard = 0;
+const totalCards = document.querySelectorAll('.flashcard').length;
+
+function showCard(index) {
+    document.querySelectorAll('.flashcard').forEach(card => card.classList.remove('active'));
+    document.querySelectorAll('.flashcard')[index].classList.add('active');
+    document.querySelector('.card-counter').textContent = `Card ${index + 1} of ${totalCards}`;
+}
+
+function nextCard() {
+    currentCard = (currentCard + 1) % totalCards;
+    showCard(currentCard);
+}
+
+function prevCard() {
+    currentCard = (currentCard - 1 + totalCards) % totalCards;
+    showCard(currentCard);
+}
+
+// Initialize
+showCard(0);
+
+// Simple function to flip a card
+function flipCard(element) {
+    element.classList.toggle('flipped');
+}
+</script>
+
+<style>
+.mcq-section {
+    background: #f8f9fa;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.mcq-section h4 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
+.mcq-section p {
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.form-check {
+    margin-bottom: 10px;
+    padding-left: 30px;
+}
+
+.form-check-input {
+    margin-top: 6px;
+}
+
+.form-check-label {
+    color: #495057;
+    font-size: 0.95rem;
+}
+
+.form-check-input:checked + .form-check-label {
+    color: #2c3e50;
+    font-weight: 500;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Correct answers
+    const correctAnswers = {
+        'factualMCQ': 'factual1',  //Real one
+        'logicalMCQ': 'logical2',  
+        'culturalMCQ': 'cultural1', 
+        'caricatureMCQ': 'caricature3', 
+        'oversimplificationMCQ': 'oversimplification3',
+        'unrelatableMCQ':'unrelatable2',
+        'linguisticMCQ': 'linguistic1'  
+    };
+
+    // Add change event listeners to all radio buttons
+    document.querySelectorAll('.form-check-input').forEach(radio => {
+        radio.addEventListener('change', function() {
+            const questionName = this.name;
+            const selectedId = this.id;
+            const isCorrect = correctAnswers[questionName] === selectedId;
+            
+            // Find the parent form-check div
+            const formCheck = this.closest('.form-check');
+            
+            // Remove any existing feedback
+            formCheck.classList.remove('correct-answer', 'incorrect-answer');
+            
+            // Add appropriate feedback class
+            formCheck.classList.add(isCorrect ? 'correct-answer' : 'incorrect-answer');
+        });
+    });
+});
+</script>
+
+<style>
+.correct-answer {
+    background-color: rgba(40, 167, 69, 0.1);
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.incorrect-answer {
+    background-color: rgba(220, 53, 69, 0.1);
+    border-radius: 4px;
+    padding: 5px;
+}
+</style>
+</body>
+</html>
