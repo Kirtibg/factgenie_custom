@@ -88,16 +88,42 @@ Each line in the `.jsonl` file should be a JSON object with the following struct
 
 ## Citation / Attribution
 
-If you use this interface or the underlying methodology in your research, please cite:
+If you find this interface or the underlying methodology useful, please cite our work:
 
-- The original factgenie paper: [arXiv](https://arxiv.org/abs/2407.17863).
+```
+@article{bhagat2025tales,
+  title={TALES: A Taxonomy and Analysis of Cultural Representations in LLM-generated Stories},
+  author={Bhagat, Kirti and Bhatt, Shaily and Velagapudi, Athul and Vashistha, Aditya and Dave, Shachi and Pruthi, Danish},
+  journal={arXiv preprint arXiv:2511.21322},
+  year={2025}
+}
+```
+Please also make sure to cite factgenie, which our interface is built upon:
 
-- Our paper: TODO
+```
+@inproceedings{kasner2024factgenie,
+    title = "factgenie: A Framework for Span-based Evaluation of Generated Texts",
+    author = "Kasner, Zden{\v{e}}k  and
+      Platek, Ondrej  and
+      Schmidtova, Patricia  and
+      Balloccu, Simone  and
+      Dusek, Ondrej",
+    editor = "Mahamood, Saad  and
+      Minh, Nguyen Le  and
+      Ippolito, Daphne",
+    booktitle = "Proceedings of the 17th International Natural Language Generation Conference: System Demonstrations",
+    year = "2024",
+    address = "Tokyo, Japan",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2024.inlg-demos.5",
+    pages = "13--15",
+}
+```
 
 
 
 ## License
 
-This project inherits the license of FactGenie. Please refer to the [LICENSE](https://github.com/ufal/factgenie/blob/master/LICENSE) file in the original repository for details.
+This project inherits the license of factgenie. Please refer to the [LICENSE](https://github.com/ufal/factgenie/blob/master/LICENSE) file in the original repository for details.
 
 
