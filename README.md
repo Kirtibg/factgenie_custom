@@ -1,5 +1,6 @@
 
-This repository contains the code for the annotation interface used in the paper: **"Lehengas in Schools? Evaluating the Cultural Representation of AI-generated Stories in the Indian Context"**
+This repository contains the code for the annotation interface used in the paper: **"TALES: A Taxonomy and Analysis of Cultural Representations in LLM-generated Stories
+"**
 in which we conducted a large-scale human evaluation of LLM-generated stories to assess the prevalence of cultural misrepresentations. This interface enabled participants to highlight spans in the generated story, tag the relevant category of misrepresentation, and add comments to support their annotations.
 
 The interface is a modified version of [factgenie](https://github.com/ufal/factgenie), tailored for annotating user-specific content, cloud-based data storage and retrieval, and enhanced span-level annotations with reasoning comments.
